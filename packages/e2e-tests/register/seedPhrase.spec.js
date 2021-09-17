@@ -4,7 +4,7 @@ const {
     generateTestAccountId,
     E2eTestAccount,
 } = require("../utils/account");
-const { walletNetwork } = require("../utils/config");
+const nearApiJsConnection = require("../utils/connectionSingleton");
 const { HomePage } = require("./models/Home");
 const { CreateAccountPage } = require("./models/CreateAccount");
 const { SetRecoveryOptionPage } = require("./models/SetRecoveryOption");
@@ -91,7 +91,7 @@ describe("Account Registration Using Seed Phrase", () => {
             .grantPermissions(["clipboard-read", "clipboard-write"])
             .catch(test.skip);
         // skip test on mainnet
-        if (walletNetwork === WALLET_NETWORK.MAINNET) {
+        if (nearApiJsConnection.config.networkId === WALLET_NETWORK.MAINNET) {
             test.skip();
         }
 
