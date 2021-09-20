@@ -34,6 +34,7 @@ const RecoverAccountSeedPhraseForm = ({
                 disabled={!isLegit || mainLoader}
                 sending={actionsPending(['RECOVER_ACCOUNT_SEED_PHRASE', 'REFRESH_ACCOUNT_OWNER'])}
                 sendingString='button.recovering'
+                data-test-id="seedPhraseRecoverySubmitButton"
             >
                 <Translate id='button.findMyAccount' />
             </FormButton>
