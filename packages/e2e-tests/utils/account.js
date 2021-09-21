@@ -1,4 +1,3 @@
-const { BN } = require("bn.js");
 const {
     utils: {
         format: { parseNearAmount },
