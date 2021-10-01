@@ -542,7 +542,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state, { match }) => {
-    const { router, recoveryMethods, status } = state;
+    const { router, recoveryMethods } = state;
 
     return {
         ...selectAccountSlice(state),
