@@ -14,8 +14,10 @@ import {
     fundCreateAccount
 } from '../../redux/actions/account';
 import { clearGlobalAlert, showCustomAlert } from '../../redux/actions/status';
+import { selectAccountId, selectAccountSlice } from '../../redux/slices/account';
 import { actions as linkdropActions } from '../../redux/slices/linkdrop';
 import { actions as recoveryMethodsActions } from '../../redux/slices/recoveryMethods';
+import { selectStatusMainLoader } from '../../redux/slices/status';
 import copyText from '../../utils/copyText';
 import isMobile from '../../utils/isMobile';
 import parseFundingOptions from '../../utils/parseFundingOptions';
@@ -288,13 +290,17 @@ const mapDispatchToProps = {
     setLinkdropAmount
 };
 
-const mapStateToProps = ({ account, recoveryMethods, status }, { match }) => ({
-    ...account,
-    verify: match.params.verify,
-    accountId: match.params.accountId,
-    activeAccountId: account.accountId,
-    recoveryMethods,
-    mainLoader: status.mainLoader
-});
+const mapStateToProps = (state, { match }) => {
+    const { recoveryMethods } = state;
+    
+    return {
+        ...selectAccountSlice(state),
+        verify: match.params.verify,
+        accountId: match.params.accountId,
+        activeAccountId: selectAccountId(state),
+        recoveryMethods,
+        mainLoader: selectStatusMainLoader(state)
+    };
+};
 
 export const SetupSeedPhraseWithRouter = connect(mapStateToProps, mapDispatchToProps)(withRouter(SetupSeedPhrase));
