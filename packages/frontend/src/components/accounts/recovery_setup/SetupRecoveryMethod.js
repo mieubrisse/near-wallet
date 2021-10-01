@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { Mixpanel } from '../../../mixpanel/index';
 import * as accountActions from '../../../redux/actions/account';
 import { showCustomAlert } from '../../../redux/actions/status';
-import { selectAccountSlice } from '../../../redux/slices/account';
+import { selectAccountId, selectAccountSlice } from '../../../redux/slices/account';
 import { actions as linkdropActions } from '../../../redux/slices/linkdrop';
 import { actions as recoveryMethodsActions } from '../../../redux/slices/recoveryMethods';
 import { validateEmail } from '../../../utils/account';
@@ -541,13 +541,13 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state, { match }) => {
-    const { account, router, recoveryMethods, status } = state;
+    const { router, recoveryMethods, status } = state;
 
     return {
         ...selectAccountSlice(state),
         router,
         accountId: match.params.accountId,
-        activeAccountId: account.accountId,
+        activeAccountId: selectAccountId(state),
         recoveryMethods,
         mainLoader: status.mainLoader
     };
