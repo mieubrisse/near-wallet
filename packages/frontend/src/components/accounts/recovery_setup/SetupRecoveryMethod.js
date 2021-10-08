@@ -13,7 +13,7 @@ import * as accountActions from '../../../redux/actions/account';
 import { showCustomAlert } from '../../../redux/actions/status';
 import { selectAccountId, selectAccountSlice } from '../../../redux/slices/account';
 import { actions as linkdropActions } from '../../../redux/slices/linkdrop';
-import { actions as recoveryMethodsActions } from '../../../redux/slices/recoveryMethods';
+import { actions as recoveryMethodsActions, selectRecoveryMethodsSlice } from '../../../redux/slices/recoveryMethods';
 import { selectRouterSlice } from '../../../redux/slices/router';
 import { selectStatusMainLoader } from '../../../redux/slices/status';
 import { validateEmail } from '../../../utils/account';
@@ -542,17 +542,13 @@ const mapDispatchToProps = {
     setLinkdropAmount
 };
 
-const mapStateToProps = (state, { match }) => {
-    const { recoveryMethods } = state;
-
-    return {
-        ...selectAccountSlice(state),
-        router: selectRouterSlice(state),
-        accountId: match.params.accountId,
-        activeAccountId: selectAccountId(state),
-        recoveryMethods,
-        mainLoader: selectStatusMainLoader(state)
-    };
-};
+const mapStateToProps = (state, { match }) => ({
+    ...selectAccountSlice(state),
+    router: selectRouterSlice(state),
+    accountId: match.params.accountId,
+    activeAccountId: selectAccountId(state),
+    recoveryMethods: selectRecoveryMethodsSlice(state),
+    mainLoader: selectStatusMainLoader(state)
+});
 
 export const SetupRecoveryMethodWithRouter = connect(mapStateToProps, mapDispatchToProps)(withGoogleReCaptcha(SetupRecoveryMethod));
