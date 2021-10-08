@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { getAccessKeys, removeAccessKey } from '../../redux/actions/account';
+import { selectAccountAuthorizedApps, selectAccountSlice } from '../../redux/slices/account';
+import { selectStatusMainLoader } from '../../redux/slices/status';
 import PageContainer from '../common/PageContainer';
 import KeyListItem from '../dashboard/KeyListItem';
 import PaginationBlock from '../pagination/PaginationBlock';
@@ -164,11 +166,11 @@ const mapDispatchToProps = {
     removeAccessKey
 };
 
-const mapStateToPropsAuthorizedApps = ({ account, status }) => ({
-    ...account,
-    authorizedApps: account.authorizedApps,
+const mapStateToPropsAuthorizedApps = (state) => ({
+    ...selectAccountSlice(state),
+    authorizedApps: selectAccountAuthorizedApps(state),
     title: 'authorizedApps.pageTitle',
-    mainLoader: status.mainLoader
+    mainLoader: selectStatusMainLoader(state)
 });
 
 export const AuthorizedAppsWithRouter = connect(
