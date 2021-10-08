@@ -223,5 +223,4 @@ export default reduceReducers(
 );
 
 export const selectAccount = (state) => state.account;
-export const selectAccountsBalances = createSelector(selectAccount, (account) => account.accountsBalance);
 export const signedInAccountIdLocalStorage = createSelector(selectAccount, (account) => account.localStorage?.accountId);
